@@ -1,0 +1,53 @@
+<h2>Расчет маршрута</h2>
+
+<mat-form-field class="input_country">
+  <mat-label>Начало маршрута</mat-label>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="text-left col-10">
+        <input matInput type="text" value="{{inputStart}}">
+      </div>
+      <div class="text-right col-2" *ngIf="inputStart">
+        <button class="delete-icon" mat-icon-button (click)="clearPoint(0)">
+          <mat-icon aria-hidden="false">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-form-field>
+<mat-form-field class="input_country">
+  <mat-label>Конец маршрута</mat-label>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="text-left col-10">
+        <input matInput type="text" value="{{inputFinish}}">
+      </div>
+      <div class="text-right col-2" *ngIf="inputFinish">
+        <button class="delete-icon" mat-icon-button (click)="clearPoint(1)">
+          <mat-icon aria-hidden="false">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-form-field>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h4>Расстояние между городами, км:</h4>
+      <input type="text" class="form-control" disabled value="{{dist/1000 | number:'3.1-2'}}">
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="margin-top: 2.5rem">
+  <div class="row">
+    <div class="col-6">
+      <button mat-raised-button color="primary" style="font-size: large"
+              (click)="calc()" [disabled]="!buttonCalc">Рассчитать</button>
+    </div>
+    <div class="col-6 text-right">
+      <button mat-raised-button color="primary" style="font-size: large"
+              [disabled]="!buttonClear" (click)="clearAll()">Очистить</button>
+    </div>
+  </div>
+</div>

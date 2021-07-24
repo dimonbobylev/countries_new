@@ -1,0 +1,97 @@
+<h1>Таблица стран</h1>
+<!--<table>-->
+<!--  <tr>-->
+<!--    <th>№</th>-->
+<!--    <th>Страна</th>-->
+<!--    <th>Столица</th>-->
+<!--    <th>Население</th>-->
+<!--    <th>Площадь, км</th>-->
+<!--  </tr>-->
+<!--  <tr *ngFor="let country of allCountries; let id = index">-->
+<!--    <td>{{id+1}}</td>-->
+<!--    <td>{{country.country}}</td>-->
+<!--    <td>{{country.capital}}</td>-->
+<!--    <td>{{country.population}}</td>-->
+<!--    <td>{{country.square}}</td>-->
+<!--  </tr>-->
+<!--</table>-->
+<!--<br />-->
+<!--<hr />-->
+<!--<br />-->
+<mat-form-field style="width: 30%">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
+</mat-form-field>
+<table mat-table
+       matSort [dataSource]="dataSource"
+       class="table_blur"
+>
+  <ng-container matColumnDef="id">
+    <th *matHeaderCellDef mat-header-cell class="col-id"> №</th>
+    <td *matCellDef="let index = index;" mat-cell class="col-id">{{index + 1}}</td>
+  </ng-container>
+  <ng-container matColumnDef="country">
+    <th mat-header-cell *matHeaderCellDef class="col-country">Страна</th>
+    <td mat-cell *matCellDef="let element" class="col-country">
+      <a href="#">
+        <div>
+          <img src="{{dataService.getCountryFlag(element.country)}}" height="30" width="50">
+          <span> {{element.country}}</span>
+        </div>
+      </a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="capital">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-capital">Столица</th>
+    <td (click)="capitalClick(element.capital)" mat-cell *matCellDef="let element" class="col-capital">
+      <a href="#">
+        <div>
+          <span>{{element.capital}}</span>
+        </div>
+      </a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="population">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-population">Население, млн</th>
+    <td mat-cell *matCellDef="let element" class="col-population">
+      <div>
+        <span>{{element.population}}</span>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="square">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-square">Площадь</th>
+    <td mat-cell *matCellDef="let element" class="col-square">{{element.square}}</td>
+  </ng-container>
+  <!--доступные действия над задачей-->
+  <ng-container matColumnDef="operations">
+    <th *matHeaderCellDef mat-header-cell></th>
+    <td *matCellDef="let element" class="col-operations" mat-cell>
+
+      <button (click)="openDeleteDialog(element)" class="delete-icon"
+              mat-icon-button
+      >
+        <mat-icon aria-hidden="false">delete</mat-icon>
+      </button>
+
+
+      <button (click)="openEditDialog(element)" class="edit-icon"
+              mat-icon-button
+      >
+
+        <mat-icon aria-hidden="false">edit</mat-icon>
+      </button>
+
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+<button mat-raised-button color="primary" style="font-size: large" (click)="allCount()">Количество стран</button>
+<mat-form-field class="example-margin">
+  <mat-label>Value</mat-label>
+  <input matInput type="number" [(ngModel)]="inputNumber" (click)="xxx()">
+</mat-form-field>
+
+

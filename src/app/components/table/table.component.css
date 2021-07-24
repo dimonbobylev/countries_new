@@ -1,0 +1,114 @@
+h1 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 2.5rem;
+}
+
+/* внешние границы таблицы серого цвета толщиной 1px */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+/* границы ячеек первого ряда таблицы */
+th {
+  border: 1px solid black;
+}
+/* границы ячеек тела таблицы */
+td {
+  border: 1px solid black;
+}
+.table_blur {
+  background: #f5ffff;
+  border-collapse: collapse;
+  text-align: left;
+}
+.table_blur th {
+  border-top: 1px solid #777777;
+  border-bottom: 1px solid #777777;
+  box-shadow: inset 0 1px 0 #999999, inset 0 -1px 0 #999999;
+  background: linear-gradient(#87CEEB, #1E90FF);
+  color: white;
+  padding: 10px 15px;
+  position: relative;
+  font-size: 1.5rem;
+}
+.table_blur th:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 25%;
+  width: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255,255,255,.08));
+}
+.table_blur tr:nth-child(odd) {
+  background: #ebf3f9;
+}
+.table_blur th:first-child {
+  border-left: 1px solid #777777;
+  border-bottom:  1px solid #777777;
+  box-shadow: inset 1px 1px 0 #999999, inset 0 -1px 0 #999999;
+}
+.table_blur th:last-child {
+  border-right: 1px solid #777777;
+  border-bottom:  1px solid #777777;
+  box-shadow: inset -1px 1px 0 #999999, inset 0 -1px 0 #999999;
+}
+.table_blur td {
+  border: 1px solid #e3eef7;
+  padding: 10px 15px;
+  position: relative;
+  transition: all 0.5s ease;
+  font-size: 1.2rem;
+}
+.table_blur tbody:hover td {
+  color: transparent;
+  text-shadow: 0 0 3px #a09f9d;
+}
+.table_blur tbody:hover tr:hover td {
+  color: #444444;
+  text-shadow: none;
+}
+.delete-icon {
+  cursor: pointer;
+  color: #ea6561;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.edit-icon {
+  cursor: pointer;
+  color: #9A9A9A;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+.col-id {
+  width: 10%;
+  text-align: center;
+}
+.col-country {
+  width: 22%;
+  /*text-align: center;*/
+}
+.col-capital {
+  width: 22%;
+  /*text-align: center;*/
+}
+.col-population {
+  width: 18%;
+  /*text-align: center;*/
+}
+.col-square {
+  width: 18%;
+  /*text-align: center;*/
+}
+
+.col-operations {
+  width: 10%;
+}
