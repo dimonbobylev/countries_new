@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Countries} from '../model/allclass';
+import {Countries, Distance} from '../model/allclass';
 import {ErrorDialogComponent} from '../dialog/error-dialog/error-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -13,9 +13,11 @@ export class DataHandlerService {
 
   CountryFlag = '';
   distanceSubject = new Subject<number>();
+  someDistanceSubject = new Subject<Distance[]>();
   pointStartSubject = new Subject<string>();
   pointFinishSubject = new Subject<string>();
   someCountriesSubject = new Subject<Countries[]>();
+  populationCapitalSubject = new Subject<string>();
 
   constructor(
               private http: HttpClient,
@@ -31,7 +33,6 @@ export class DataHandlerService {
   calculationRoute(pointStart: string, pointFinish: string): void {
     this.http.post<any>('http://127.0.0.1:5000/onCalculationRoute', {pointStart, pointFinish})
       .subscribe(back => {
-        console.log(back);
         this.distanceSubject.next(back);
       });
   }
@@ -52,7 +53,16 @@ export class DataHandlerService {
         });
       });
   }
-
+  informationCapital(capital: string): void {
+    let params = new HttpParams();
+    params = params.append('_limit', capital);
+    this.http.get<Distance[]>('http://127.0.0.1:5000/informationCapital', {params})
+      .subscribe(back => {
+        this.someDistanceSubject.next(back);
+        this.http.get<any>('http://127.0.0.1:5000/populationCapital', {params})
+          .subscribe(pop => this.populationCapitalSubject.next(pop));
+      });
+  }
 
   getCountryFlag(CountryFlag): string {
     this.CountryFlag = '';

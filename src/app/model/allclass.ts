@@ -11,5 +11,13 @@ export class Countries {
     this.square = square;
   }
 }
+export class Distance {
+  capital: string;
+  distance: number;
 
+  constructor(capital: string, distance: number) {
+    this.capital = capital;
+    this.distance = distance;
+  }
+}
 

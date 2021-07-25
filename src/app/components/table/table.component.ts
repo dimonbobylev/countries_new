@@ -1,9 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Countries} from '../../model/allclass';
+import {Countries, Distance} from '../../model/allclass';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {DataHandlerService} from '../../services/data-handler.service';
+import {MatDialog} from '@angular/material/dialog';
+import {InformationDialogComponent} from '../../dialog/information-dialog/information-dialog.component';
+import {Setting} from '../../model/setting';
 
 @Component({
   selector: 'app-table',
@@ -18,7 +21,8 @@ export class TableComponent implements OnInit {
   capitalStart = '';
   capitalFinish = '';
   count = 0;
-  inputNumber = 7;
+  inputNumber = 1;
+  manyDistance: Distance[];
 
   @Input('countries')
   private set setCountries(countries: Countries[]) { // напрямую не присваиваем значения в переменную, только через @Input
@@ -32,7 +36,7 @@ export class TableComponent implements OnInit {
   finishClick = new EventEmitter<string>();
 
   dataSource: MatTableDataSource<Countries>; // контейнер - источник данных для таблицы
-  // поля для таблицы (те, что отображают данные из задачи - должны совпадать с названиями переменных класса)
+  // поля для таблицы (те, что отображают данные - должны совпадать с названиями переменных класса)
   displayedColumns: string[] = ['id', 'country', 'capital', 'population', 'square', 'operations'];
 
   // ссылки на компоненты таблицы
@@ -40,11 +44,13 @@ export class TableComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
 
   constructor(
+    private dialog: MatDialog,
     private dataService: DataHandlerService, // доступ к данным
   ) {
   }
 
   ngOnInit(): void {
+    this.inputNumber = Setting.countCountriesStart;  // данные из фаила setting.ts
     this.dataSource = new MatTableDataSource();
     this.fillTable();
     this.dataService.pointStartSubject.subscribe(point1 => {
@@ -111,11 +117,22 @@ export class TableComponent implements OnInit {
     }
   }
 
-  xxx(): void {
-
+  allCount(): void {  // отобразить количество стран заданных в input (this.inputNumber)
+    this.dataService.someCountries(this.inputNumber);
   }
 
-  allCount(): void {
-    this.dataService.someCountries(this.inputNumber);
+  informationCapital(capital: string): void { // отобразить информацию о выбранной столице
+    this.dataService.informationCapital(capital);
+    this.dataService.someDistanceSubject.subscribe(res => {
+      this.manyDistance = res;
+      this.dialog.open(InformationDialogComponent, {
+        maxWidth: '500px',
+        data: {
+          dialogTitle: capital,
+          message: res
+        },
+        autoFocus: false
+      });
+    });
   }
 }

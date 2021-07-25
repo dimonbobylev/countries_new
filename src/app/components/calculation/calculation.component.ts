@@ -56,8 +56,8 @@ export class CalculationComponent implements OnInit {
   }
 
   calc(): void {
-    console.log('Start = ', this.inputStart);
-    console.log('Finish = ', this.inputFinish);
+    // console.log('Start = ', this.inputStart);
+    // console.log('Finish = ', this.inputFinish);
     this.dataService.calculationRoute(this.inputStart, this.inputFinish);
   }
 

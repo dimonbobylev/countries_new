@@ -1,0 +1,38 @@
+<h1 mat-dialog-title style="font-weight: 550">
+  {{dialogTitle}}
+  <small>({{capitalPopulation}} млн.)</small>
+</h1>
+
+
+<div mat-dialog-content>
+<!--  <pre>{{message | json}}</pre>-->
+<!--  <div *ngFor="let i of message">{{i.capital}}</div>-->
+  <h3>Топ ближних городов</h3>
+  <table>
+      <tr>
+        <th>Город</th>
+        <th>Расстояние, км</th>
+      </tr>
+    <tr *ngFor="let item of message; let i = index">
+      <td *ngIf="i<3">{{item.capital}}</td>
+      <td *ngIf="i<3">{{item.distance | number:'3.1-2'}}</td>
+    </tr>
+  </table>
+  <h3>Топ дальних городов</h3>
+  <table>
+    <tr>
+      <th>Город</th>
+      <th>Расстояние, км</th>
+    </tr>
+    <tr *ngFor="let item of message; let i = index">
+      <td *ngIf="i>2">{{item.capital}}</td>
+      <td *ngIf="i>2">{{item.distance | number:'3.1-2'}}</td>
+    </tr>
+  </table>
+</div>
+
+
+<!--  кнопки возможных действий-->
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onConfirm()">Ок</button>
+</div>

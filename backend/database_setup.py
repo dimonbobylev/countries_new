@@ -44,9 +44,13 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-def all_countries(count):
+def all_countries(count_frontend):
     countries_array = []
-    query = session.query(Countries, Capitals).select_from(Capitals).join(Countries)[0:count]
+    count_bd = session.query(Countries).count()
+    if count_frontend > count_bd:
+        count_frontend = count_bd
+    # print("count = ", count_frontend)
+    query = session.query(Countries, Capitals).select_from(Capitals).join(Countries)[0:count_frontend]
     for instance in query:
         countries_array.append(instance)
     return countries_array
@@ -59,4 +63,30 @@ def calc(start, finish):
         # print(item.latitude, item.longitude)
         array.append((item.latitude, item.longitude))
     return array
+
+
+def more_information():
+    array = []
+    for item in session.query(Capitals):
+        row_data = {'capital': item.capital,
+                    'latitude': item.latitude,
+                    'longitude': item.longitude}
+        array.append(row_data)
+    # print(array)
+    return array
+
+
+def get_1cap(capital):
+    cap = {}
+    for item in session.query(Capitals).filter(Capitals.capital == capital):
+        cap = {'capital': item.capital,
+               'latitude': item.latitude,
+               'longitude': item.longitude}
+    return cap
+
+
+def get_population(capital):
+    for item in session.query(Capitals).filter(Capitals.capital == capital):
+        population = item.population
+    return population
 

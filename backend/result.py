@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 import database_setup as bd
 from pyproj import Geod
 
@@ -24,3 +26,26 @@ def distance(list_point):
     return dist
 
 
+def information_cap(capital):
+    array = []
+    # print(capital)
+    # for capital, latitude, longitude in bd.more_information():
+    cap = bd.get_1cap(capital)
+    # print(cap)
+    lon1 = float(cap['longitude'])
+    lat1 = float(cap['latitude'])
+    for item in bd.more_information():
+        if item['capital'] != capital:
+            # print(item)
+            lon2 = float(item['longitude'])
+            lat2 = float(item['latitude'])
+            angle1, angle2, dist = g.inv(lon1, lat1, lon2, lat2)
+            # print(f'{item["capital"]} - {dist}')
+            list1 = {
+                'capital': item["capital"],
+                'distance': dist}
+            array.append(list1)
+    array.sort(key=itemgetter('distance'))
+    array_min = array[0:3]
+    array_max = array[-3:]
+    return array_min + array_max

@@ -112,3 +112,24 @@ td {
 .col-operations {
   width: 10%;
 }
+.input_num {
+  height: 1.5rem;
+  /*width: 5rem;*/
+  /*line-height: 1rem;*/
+  font-size: 1.3rem;
+  text-align: center;
+  color: #1E90FF;
+  margin: .25rem;
+}
+.example-margin {
+  width: 5rem;
+  margin-left: 2rem;
+  /*background-color: #ea6561;*/
+}
+.button-link {
+  font-size: large;
+  background-color: transparent;
+}
+button:focus {
+  outline: none;
+}
